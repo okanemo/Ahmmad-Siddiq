@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@font-face{
+    font-family: 'AirbnbCerealMedium';
+    src: url('../../asset//font/AirbnbCerealMedium/AirbnbCerealMedium.ttf');
+}
+
+.containers{
+    align-items: center;
+}
+
+.bg{
+    position: absolute;
+    top: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -999;
+    width: 100%;
+    height: 100%;
+    filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+
+.content{
+    width: 350px;
+    height: 350px;
+    background-color: rgba(202, 202, 202, 0.445);
+    /* border: 2px solid; */
+    margin: auto;
+    margin-top: 80px;
+    border-radius: 5px;
+    text-align: center;
+    font-family: AirbnbCerealMedium;    
+    color: white;
+}
+.title-login{
+    font-weight: bold;
+    padding-top: 30px;
+    color: black;
+}
+
+.formInput{
+    margin: auto;
+    margin-top: 20px;
+    width: 80%;
+}
+
+.boxInput{
+    position: relative;
+    margin: auto;
+    border: 2px solid;
+    border-radius: 5px;
+    margin-top: 30px;
+    width: 100%;
+    height: 42px;
+    background-color: white;
+}
+
+.input-email{
+    /* margin-top: 30px; */
+    width: 90%;
+    position: absolute;
+    left: 28px;
+    border: none;
+    outline-color:white;
+    height: 38px;
+    padding-left: 10px;
+    color: rgb(80, 80, 80);
+}
+
+.icon-input{
+    position: absolute;
+    left: 5px;
+    top: 20%;
+    width: 20px;
+    filter: grayscale(20px);
+}
+
+.btn-login{
+    margin-top: 23px;
+}
+
+.title-new-regis{
+    margin-top: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+.title-new-regis:hover{
+    text-decoration: none;
+    border-bottom: none;
+    color: white;
+}
+
+
+
+
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}

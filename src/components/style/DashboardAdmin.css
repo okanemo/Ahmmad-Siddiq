@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.containers-dashboard{
+    background-color: rgb(107, 107, 107);
+    width: 100%;
+    height: 100%;
+}
+
+.header{
+    width: 100%;
+    height: 80px;
+    background-color: rgb(68, 68, 165);
+}
+
+.header-title{
+    color: rgb(255, 255, 255);
+    line-height: 70px;
+    margin-left: 80px;
+}
+
+.sideBar{
+    text-align: center;
+    width: 5%;
+    /* background-color: rgb(103, 103, 206); */
+    border-right: 1px solid rgb(190, 190, 190);
+    position: absolute;
+    top: 80px;
+    bottom: 0px;
+}
+
+.rightBar{
+    text-align: center;
+    width: 20%;
+    background-color: white;
+    border-left: 1px solid rgb(190, 190, 190);
+    position: absolute;
+    top: 80px;
+    right: 0;
+    bottom: 0px;
+}
+
+.contents{
+    width: 75%;
+    text-align: center;
+    /* border: 2px solid; */
+    position: absolute;
+    left: 5%;
+}
+
+.logOut{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
