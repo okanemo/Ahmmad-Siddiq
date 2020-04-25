@@ -10,6 +10,8 @@
 }
 
 .header{
+    position: fixed;
+    top: 0;
     width: 100%;
     height: 80px;
     background-color: rgb(68, 68, 165);
@@ -26,7 +28,7 @@
     width: 5%;
     /* background-color: rgb(103, 103, 206); */
     border-right: 1px solid rgb(190, 190, 190);
-    position: absolute;
+    position: fixed;
     top: 80px;
     bottom: 0px;
 }
@@ -36,7 +38,7 @@
     width: 20%;
     background-color: white;
     border-left: 1px solid rgb(190, 190, 190);
-    position: absolute;
+    position: fixed;
     top: 80px;
     right: 0;
     bottom: 0px;
@@ -44,10 +46,12 @@
 
 .contents{
     width: 75%;
+    margin-top: 70px;
     text-align: center;
     /* border: 2px solid; */
     position: absolute;
     left: 5%;
+    z-index: -999;
 }
 
 .logOut{
@@ -64,6 +68,7 @@
 .listContent{
     float: left;
     margin-left: 75px;
+    margin-bottom: 20px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     /* border: 2px solid; */
@@ -183,4 +188,8 @@
     text-align: justify;
     font-size: 15px;
     padding: 5px;
+}
+
+.empty{
+    margin-top: 200px;
 }

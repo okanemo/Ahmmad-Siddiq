@@ -13,11 +13,15 @@ const DashboardAdmin =()=>{
     const [dataUsers, setDataUsers] = useState([])
     const [show, setShow] = useState(false);
     const [modalOk, setModalOk] = useState(false);
+    const [ModaldeleteProduct, setDeleteProduct] = useState(false);
     const [modalUpdate, setModalUpdate] = useState(false);
     const [modalAddItem, setModalAddItem] = useState(false);
     const [id_user, setId] = useState(false);
+    const [idProduct, setIdProduct] = useState(false);
     const [detileUser, setDetileUser] = useState([]);
     const [dataContent, setDataContent] = useState([]);
+
+    const [reading, setReading] = useState([]);
 
     const [productName, setNameProduct] = useState('');
     const [desCription, setDescription] = useState('');
@@ -26,6 +30,12 @@ const DashboardAdmin =()=>{
 
     const [inputUsername, setUsername] = useState('');
     const [inputStatus, SetSatus] = useState('');
+
+    const handleModalProduct = (data) => {
+        setIdProduct(data.id_product)
+        setDeleteProduct(true)
+    }
+    const handleModalProductClose = () => setDeleteProduct(false)
 
     const handleModaAddItem = () => setModalAddItem(true)
     const handleModaAddItemClose = () => setModalAddItem(false)
@@ -142,6 +152,10 @@ const DashboardAdmin =()=>{
         }).catch(err=>console.log(err))
     }
 
+    const setToReading =(data)=>{
+        setReading(data)
+    }
+
     const timeClearLocalStorage=()=>{
         let hours = 2
         let saved = localStorage.getItem('saved')
@@ -150,6 +164,18 @@ const DashboardAdmin =()=>{
             logOut()
         }
     }
+
+    const deleteContent = async ()=>{
+        // console.log(idProduct)
+        Axios.delete(BASE_URL+`/delete/${idProduct}`)
+        .then(res=>{
+            // console.log(res)
+            alert('Success')
+            handleModalProductClose()
+            history.push('/')
+        }).catch(err=>console.log(err))
+    }
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if(token === 0 || token === undefined || token === null){
@@ -179,9 +205,15 @@ const DashboardAdmin =()=>{
             <div className="rightBar">
                 <h4 className="reading">Reading Column</h4>
                 <div className="content-reading">
-                    <img className='img-reading' src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
-                    <h5>The Shack</h5>
-                    <p className="text-reading">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, molestias qui, hic numquam consequatur nesciunt eaque, officiis libero repellendus asperiores quia ad quas atque veniam odio nulla labore facere saepe. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas repellendus nulla illum fugiat sapiente temporibus explicabo debitis assumenda at ratione in voluptatibus id distinctio, accusamus omnis, natus veniam iste ex. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid ex, ab ducimus dolore debitis veritatis rerum voluptatibus sapiente delectus nihil quos saepe distinctio, odio quaerat reprehenderit porro, similique ratione neque.</p>
+                    {
+                        reading.length !== 0 ? (
+                            <>
+                            <img onClick={()=>console.log(reading)} className='img-reading' src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                            <h5>{reading.product_name}</h5>
+                            <p className="text-reading">{reading.description}</p>
+                            </>
+                        ) : <div className="empty">Empty</div>
+                    }
                 </div>
             </div>
             <div className="contents">
@@ -195,9 +227,9 @@ const DashboardAdmin =()=>{
                             dataContent.map(post=>{
                                 return(
                                     <div key={post.id_product} className="listContent">
-                                        <img onClick={()=>console.log(dataContent)} className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                        <img onClick={()=>setToReading(post)} className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
                                         <p className="titleImg">{post.product_name}</p>
-                                        <img className="imgDelet" src={require('../../asset/img/icons8-delete-bin-24.png')} alt=""/>
+                                        <img onClick={()=>handleModalProduct(post)} className="imgDelet" src={require('../../asset/img/icons8-delete-bin-24.png')} alt=""/>
                                     </div> 
                                 )
                             })
@@ -306,6 +338,22 @@ const DashboardAdmin =()=>{
                     </Button>
                     <Button variant="primary" onClick={()=>addItem()}>
                         ADD
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* modal delete product */}
+                <Modal show={ModaldeleteProduct} onHide={handleModalProductClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>DELETE</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to delete this ?</Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleModalProductClose}>
+                        Cencel
+                    </Button>
+                    <Button variant="danger" onClick={()=>deleteContent()}>
+                        Delete
                     </Button>
                     </Modal.Footer>
                 </Modal>
