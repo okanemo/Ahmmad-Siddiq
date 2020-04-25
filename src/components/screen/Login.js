@@ -29,15 +29,22 @@ const Login =()=>{
                     // dispatch(login(res.data))
                     const token = res.data.token
                     const level = res.data.level
-                    if(token !== 0){
-                        localStorage.setItem('token', token)
-                        localStorage.setItem('email', email)
-                        localStorage.setItem('saved', new Date().getTime())
-                        if(level === 'admin'){
-                            history.push('/Dashboard-admin',res.data)
+                    if(res.data !== 0){
+                        if(res.data !== 1){
+                            // console.log('masuk')
+                            localStorage.setItem('token', token)
+                            localStorage.setItem('email', email)
+                            localStorage.setItem('saved', new Date().getTime())
+                            if(level === 'admin'){
+                                history.push('/Dashboard-admin',res.data)
+                            }else{
+                                history.push('/Dashboard',res.data)
+                            }
                         }else{
-                            history.push('/Dashboard',res.data)
+                            alert('password wrong')
                         }
+                    }else{
+                        alert('email wrong')
                     }
                 }
                 )

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../style/DashboardAdmin.css';
 import {useHistory} from 'react-router-dom';
 import Axios from 'axios';
@@ -8,8 +8,24 @@ const DashboardAdmin =()=>{
     let history = useHistory();
     const BASE_URL = 'http://192.168.1.12:4000';
 
-    // const [user, setUser] = useState('')
+    const [contentData, setContentData] = useState(false)
+    const [dataUsers, setDataUsers] = useState([])
 
+    const getUsers = async ()=>{
+        await Axios.get(BASE_URL+'/users')
+        .then(res=>{
+            const data = res.data
+            const email = localStorage.getItem('email')
+            const newData=[]
+            data.forEach(e => {
+                if(e.email !== email){
+                    newData.push({...e})
+                }
+            });
+            setDataUsers(newData)
+        }).catch(err=>console.log(err))
+    }
+    
     const logOut=()=>{
         localStorage.clear();
         history.push('/Dashboard');
@@ -44,6 +60,7 @@ const DashboardAdmin =()=>{
         if(token === 0 || token === undefined || token === null){
             history.push('/')
         }
+        getUsers()
         cekUser()
         timeClearLocalStorage()
         setTimeout(logOut, 7200000)
@@ -56,27 +73,59 @@ const DashboardAdmin =()=>{
                 <h1 className="header-title">Dashboard Admin</h1>
                 <button onClick={()=>{logOut()}} type="button" className="btn btn-outline-warning logOut">Log Out</button>
             </header>
-                <div className="sideBar">
-                    <img className="icon-sideBar-admin" src={require('../../asset/img/icons8-bookmark-50.png')} alt=""/>
-                    <img className="icon-sideBar-admin" src={require('../../asset/img/users.png')} alt=""/>
-                </div>
-                <div className="rightBar">
-                    <p>rightBar</p>
-                </div>
+            <div className="sideBar">
+                <img onClick={()=> setContentData(true)} className="icon-sideBar-admin" src={require('../../asset/img/icons8-bookmark-50.png')} alt=""/>
+                <img onClick={()=> setContentData(false)} className="icon-sideBar-admin" src={require('../../asset/img/users.png')} alt=""/>
+            </div>
+            <div className="rightBar">
+                <p>rightBar</p>
+            </div>
             <div className="contents">
-                <h3 className="content-title">Content</h3>
-                <div className="listContent">
-                    <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
-                    <p className="titleImg">The Shuck</p>
-                </div> 
-                <div className="listContent">
-                    <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
-                    <p className="titleImg">The Shuck</p>
-                </div> 
-                <div className="listContent">
-                    <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
-                    <p className="titleImg">The Shuck</p>
-                </div> 
+                {
+                    contentData ? (
+                        <>
+                            <div className="listContent">
+                                <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                <p className="titleImg">The Shuck</p>
+                            </div> 
+                            <div className="listContent">
+                                <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                <p className="titleImg">The Shuck</p>
+                            </div> 
+                            <div className="listContent">
+                                <img className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                <p className="titleImg">The Shuck</p>
+                            </div> 
+                        </>
+                    ):(
+                        <div className="contents-user">
+                            <h3 className="title-daftar-users">Daftar User</h3>
+                                <table class="table1">
+                                    <tr>
+                                        <th>Id User</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                            {   
+                                dataUsers.map(post=>{
+                                    return(
+                                        <tr key={post.id_user}>
+                                            <td>{post.id_user}</td>
+                                            <td>{post.username}</td>
+                                            <td>{post.email}</td>
+                                            <td>{post.level}</td>
+                                            <td><span className="action-table">Update </span>| <span className="action-table">Delete</span></td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            </table>
+                        </div>
+                    )
+                }
+                
             </div>
         </div>
     )
