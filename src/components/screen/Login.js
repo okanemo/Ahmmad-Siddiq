@@ -70,6 +70,9 @@ const Login =()=>{
                         <input placeholder="Password" type="password" className="input-email" aria-describedby="emailHelp" value={password} onChange={(e)=> setPassword(e.target.value)} />
                     </div>
                     <button onClick={()=> handelInput()} type="button" className="btn btn-primary btn-lg btn-block btn-login">Login</button>
+                    {/* <Link className="Link" to="/Forgote">
+                        <span className="title-forgote">Forgote Password</span>
+                    </Link> */}
                     <Link className="Link" to="/Register">
                         <p className="title-new-regis">New Register</p>
                     </Link>

@@ -9,6 +9,8 @@ import {Provider} from 'react-redux';
 import store from '../src/redux/Store';
 import Dashboard from '../src/components/screen/Dashboard';
 import DashboardAdmin from '../src/components/screen/DashboardAdmin';
+import Register from '../src/components/screen/Register';
+import Forgote from '../src/components/screen/Forgote';
 const Data = () => {
   return(
     <Provider store={store}>
@@ -16,6 +18,8 @@ const Data = () => {
         <Route path='/' exact component={Login} />
         <Route path='/Dashboard' component={Dashboard} />
         <Route path='/Dashboard-admin' component={DashboardAdmin} />
+        <Route path='/Register' component={Register} />
+        <Route path='/Forgote' component={Forgote} />
       </Router>
     </Provider>
   )

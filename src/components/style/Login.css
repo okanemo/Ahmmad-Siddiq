@@ -27,7 +27,6 @@
 
 .content{
     width: 350px;
-    height: 350px;
     background-color: rgba(202, 202, 202, 0.445);
     /* border: 2px solid; */
     margin: auto;
@@ -82,20 +81,33 @@
 
 .btn-login{
     margin-top: 23px;
+    margin-bottom: 20px;
 }
 
-.title-new-regis{
-    margin-top: 20px;
+.title-forgote{
     font-size: 13px;
     cursor: pointer;
     text-decoration: none;
     color: white;
+    font-style: italic;
+    padding-top: 20px;
 }
-.title-new-regis:hover{
+
+.title-new-regis{
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    padding-bottom: 20px;
+
+}
+/* .title-new-regis:hover{
     text-decoration: none;
     border-bottom: none;
     color: white;
-}
+} */
+
+
 
 
 
