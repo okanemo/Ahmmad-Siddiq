@@ -46,7 +46,9 @@ const Dashboard =()=>{
         }
         cekUser()
         timeClearLocalStorage()
-        setTimeout(logOut, 7200000)
+        return ()=>{
+            setTimeout(logOut, 7200000)
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [history])
 

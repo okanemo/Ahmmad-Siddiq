@@ -64,7 +64,6 @@
 .listContent{
     float: left;
     margin-left: 75px;
-    margin-top: 20px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     /* border: 2px solid; */
@@ -145,4 +144,43 @@
 
 .action-table{
     cursor: pointer;
+}
+
+.btnAdd{
+    position: absolute;
+    right: 50px;
+    top: 50px;
+}
+
+.titleImg{
+    margin-top: 20px;
+}
+
+.imgDelet{
+    position: relative;
+    top: -10px;
+    right: -100px;
+    cursor: pointer;
+}
+
+.reading{
+    margin-top: 20px;
+}
+
+.content-reading{
+    border-top: 1px solid rgb(206, 206, 206);
+    overflow-y: scroll;
+    max-height: 450px;
+}
+
+.img-reading{
+    max-width: 200px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.text-reading{
+    text-align: justify;
+    font-size: 15px;
+    padding: 5px;
 }
