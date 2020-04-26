@@ -21,14 +21,10 @@ const DashboardAdmin =()=>{
     const [idProduct, setIdProduct] = useState(false);
     const [detileUser, setDetileUser] = useState([]);
     const [dataContent, setDataContent] = useState([]);
-
     const [reading, setReading] = useState([]);
-
     const [productName, setNameProduct] = useState('');
     const [desCription, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    
-
     const [inputUsername, setUsername] = useState('');
     const [inputStatus, SetSatus] = useState('');
 
@@ -37,7 +33,6 @@ const DashboardAdmin =()=>{
         setDeleteProduct(true)
     }
     const handleModalProductClose = () => setDeleteProduct(false)
-
     const handleModaAddItem = () => setModalAddItem(true)
     const handleModaAddItemClose = () => setModalAddItem(false)
     const handleUpdateClose = () => setModalUpdate(false)
@@ -49,7 +44,6 @@ const DashboardAdmin =()=>{
     const handleClose = () => setShow(false);
     const handleShow = (id_users) => {
         setShow(true);
-        // console.log(id_users)
         setId(id_users)
     }
 
@@ -87,7 +81,6 @@ const DashboardAdmin =()=>{
                 if(res.data[0].level !== 'admin'){
                     history.push('/Dashboard')
                 }
-                // console.log(res.data[0].level)
             }).catch(err=> console.log(err))
         }
     }
@@ -98,7 +91,6 @@ const DashboardAdmin =()=>{
             description: desCription,
             price: price
         }
-        // console.log(data)
         Axios.post(BASE_URL+'/insert', data,{
             headers:{
                 token: localStorage.getItem('token')
@@ -121,37 +113,32 @@ const DashboardAdmin =()=>{
             password: detileUser.password,
             level: inputStatus
         }
-        // console.log(data)
         Axios.patch(BASE_URL+'/update/users',data,{
             headers:{
                 token: localStorage.getItem('token')
             }
         })
         .then(res=>{
-                // console.log(res.data)
-                if(res.data.affectedRows){
-                    alert('Success')
-                    handleUpdateClose()
-                    history.push('/')
-                }
+            if(res.data.affectedRows){
+                alert('Success')
+                handleUpdateClose()
+                history.push('/')
+            }
         }).catch(err=> console.log(err))
     }
 
     const updateUser =async(dataDetileUser)=>{
         setModalUpdate(true)
         setDetileUser(dataDetileUser)
-        // .then
     }
 
     const deleteUser = async ()=>{
-        // console.log(id_user)
         handleClose()
         Axios.delete(BASE_URL+`/delete/users/${id_user}`,{
             headers:{
                 token: localStorage.getItem('token')
             }
         }).then(res=>{
-            // console.log(res.data.affectedRows)
             if(res.data.affectedRows){
                 handleOk();
             }
@@ -183,14 +170,12 @@ const DashboardAdmin =()=>{
     }
 
     const deleteContent = async ()=>{
-        // console.log(idProduct)
         Axios.delete(BASE_URL+`/delete/${idProduct}`,{
             headers:{
                 token: localStorage.getItem('token')
             }
         })
         .then(res=>{
-            // console.log(res)
             alert('Success')
             handleModalProductClose()
             history.push('/')
@@ -264,7 +249,6 @@ const DashboardAdmin =()=>{
                             <h3 className="title-daftar-users">Daftar User</h3>
                                 <table className="table1">
                                 <tbody>
-
                                     <tr>
                                         <th>Id User</th>
                                         <th>Username</th>
@@ -290,7 +274,6 @@ const DashboardAdmin =()=>{
                         </div>
                     )
                 }
-                
                 </div>
                 {/* Modal delete */}
                 <Modal show={show} onHide={handleClose}>
@@ -330,7 +313,6 @@ const DashboardAdmin =()=>{
                         <Form.Label>Username</Form.Label>
                         <Form.Control value={inputUsername} onChange={(e)=>setUsername(e.target.value)} type="email" placeholder="Enter username" />
                         <Form.Label>Status</Form.Label>
-                        {/* <Form.Control value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} type="email" placeholder="Enter status" /> */}
                         <Form.Control as="select" value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} custom>
                             <option>Select</option>
                             <option>user</option>

@@ -13,7 +13,7 @@ function AlertDismissible() {
     }
     
     useEffect(()=>{
-        setTimeout(()=>{setShow(false)}, 8000)
+        setTimeout(()=>{setShow(false)}, 5000)
     },[])
     return (
       <>

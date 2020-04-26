@@ -10,7 +10,6 @@ const Register =()=>{
     const [codes, setCode] = useState('');
     const [password, setPassword] = useState('');
     const [newpassword, setNewPassword] = useState('');
-    // const dispatch = useDispatch();
     const handelInput = () =>{
         if(setCode.length > 0 && password.length > 0 && newpassword.length >0){
                 const data = {
@@ -18,7 +17,6 @@ const Register =()=>{
                     'password': password,
                 }
                 if(password === newpassword){
-                    // console.log(codes)
                     Axios.post(BASE_URL+`/getcode`, data)
                     .then(res=>{
                         if(res.data.length > 0){
@@ -37,8 +35,6 @@ const Register =()=>{
                         }
                         
                     }).catch(err=>console.log(err))
-                    // console.log(data)
-                    // alert('masuk')
                 }else{
                     alert('Passwords are not the same')
                 }

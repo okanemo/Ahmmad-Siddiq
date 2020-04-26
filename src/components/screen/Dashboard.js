@@ -8,7 +8,6 @@ require('dotenv').config();
 const Dashboard =()=>{
     let history = useHistory();
     const BASE_URL = 'http://192.168.1.12:4000';
-
     const [contentData, setContentData] = useState(true);
     const [nameUser, setNameUser] = useState([])
     const [show, setShow] = useState(false);
@@ -17,16 +16,13 @@ const Dashboard =()=>{
     const [dataFafovorite, setInsertFavorite] = useState(false);
     const [dataContent, setDataContent] = useState([]);
     const [dataFavorite, setDataFavorite] = useState([]);
-
     const [reading, setReading] = useState([]);
-
 
     const handleModalProduct = (data) => {
         setInsertFavorite(data)
         setDeleteProduct(true)
     }
     const handleModalProductClose = () => setDeleteProduct(false)
-
     const handleClose = () => setShow(false);
     const handleShow = (id_product) => {
         setShow(true);
@@ -75,7 +71,6 @@ const Dashboard =()=>{
 
     const timeClearLocalStorage=()=>{
         // let hours = 1
-        
         let saved = localStorage.getItem('saved')
         // if (saved && (new Date().getTime() - saved > hours * 60 * 60 * 1000)) {
         if (saved && (new Date().getTime() - saved > 900000)) {
@@ -89,14 +84,12 @@ const Dashboard =()=>{
             description: dataFafovorite.description,
             email: localStorage.getItem('email')
         }
-        // console.log(dataInput)
         Axios.post(BASE_URL+`/insert/favorite`,dataInput,{
             headers:{
                 token: localStorage.getItem('token')
             }
         })
         .then(res=>{
-            // console.log(res)
             alert('Success')
             handleModalProductClose()
             history.push('/')
@@ -119,7 +112,6 @@ const Dashboard =()=>{
 
     const deleteFavorite = async()=>{
         const id = idProduct.id_favorite
-        // console.log(data)
         Axios.delete(BASE_URL+`/delete/favorite/${id}`,{
             headers:{
                 token: localStorage.getItem('token')
@@ -129,7 +121,6 @@ const Dashboard =()=>{
             handleClose()
             alert('Delete Success...!');
             history.push('/')
-            // setContentData(false)
         })
     }
 

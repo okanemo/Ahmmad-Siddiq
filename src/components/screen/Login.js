@@ -8,19 +8,13 @@ import { Modal, Button, Form } from 'react-bootstrap';
 const Login =()=>{
     const BASE_URL = 'http://192.168.1.12:4000';
     let history = useHistory();
-
     const [show, setShow] = useState(false);
-
     const [email, setEmail] = useState('');
     const [emailModal, setEmailModal] = useState('');
     const [password, setPassword] = useState('');
-    // const dispatch = useDispatch();
-
     const handleClose = () => setShow(false);
     const handleShow = (id_users) => {
         setShow(true);
-        // console.log(id_users)
-        // setId(id_users)
     }
 
     const handelInput = () =>{
@@ -31,21 +25,17 @@ const Login =()=>{
                 alert("Alamat email tidak valid.");
                 return false;
             } else {
-                // alert("Alamat email valid.");
                 const data = {
                     'email': email,
                     'password': password
                 }
                 Axios.post(BASE_URL+`/login`, data)
                 .then(res=>{
-                    // console.log('data saya'+res.data)
-                    // dispatch(login(res.data))
                     const token = res.data.token
                     const level = res.data.level
                     if(res.data !== 0){
                         if(res.data !== 1){
                             if(res.data.verify !== 0){
-                                // console.log('masuk')
                                 localStorage.setItem('token', token)
                                 localStorage.setItem('email', email)
                                 localStorage.setItem('saved', new Date().getTime())
@@ -66,7 +56,6 @@ const Login =()=>{
                 }
                 )
                 .catch(err=>console.log(err))
-                // console.log(input)
             }
         }else{
             alert('Kosong')
@@ -81,8 +70,7 @@ const Login =()=>{
                 alert("Invalid email...!");
                 return false;
             }else{
-                const data = {'email': emailModal,}
-                // console.log(data)
+                const data = {'email': emailModal}
                 Axios.get(BASE_URL+'/users')
                 .then(res=>{
                     const dataUser = res.data
@@ -95,10 +83,8 @@ const Login =()=>{
                     if(status === false){
                         alert('Email belum terdaftar')
                     }else{
-                        // alert('masuk')
                         Axios.post(BASE_URL+'/forgote', data)
                         .then(res=>{
-                            // console.log(res)
                             alert('Check email for verification')
                             handleClose()
                             setEmailModal('')
