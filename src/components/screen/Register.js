@@ -25,6 +25,7 @@ const Register =()=>{
                     'email': email,
                     'password': password,
                     'level': 'user',
+                    'verify': 0,
                 }
                 Axios.get(BASE_URL+`/users`)
                 .then(res=>{
@@ -52,7 +53,7 @@ const Register =()=>{
                 }).catch(err=>console.log(err))
             }
         }else{
-            alert('Kosong')
+            alert('Please enter your data')
         }
     }
 

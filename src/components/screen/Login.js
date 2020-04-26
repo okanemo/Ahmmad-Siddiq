@@ -3,13 +3,26 @@ import React, {useState, useEffect} from 'react';
 import '../style/Login.css';
 import Axios from 'axios';
 import {useHistory, Link} from 'react-router-dom';
+import { Modal, Button, Form } from 'react-bootstrap';
+
 const Login =()=>{
     const BASE_URL = 'http://192.168.1.12:4000';
     let history = useHistory();
 
+    const [show, setShow] = useState(false);
+
     const [email, setEmail] = useState('');
+    const [emailModal, setEmailModal] = useState('');
     const [password, setPassword] = useState('');
     // const dispatch = useDispatch();
+
+    const handleClose = () => setShow(false);
+    const handleShow = (id_users) => {
+        setShow(true);
+        // console.log(id_users)
+        // setId(id_users)
+    }
+
     const handelInput = () =>{
         if(email.length > 0 && password.length > 0){
             var atps=email.indexOf("@");
@@ -31,20 +44,24 @@ const Login =()=>{
                     const level = res.data.level
                     if(res.data !== 0){
                         if(res.data !== 1){
-                            // console.log('masuk')
-                            localStorage.setItem('token', token)
-                            localStorage.setItem('email', email)
-                            localStorage.setItem('saved', new Date().getTime())
-                            if(level === 'admin'){
-                                history.push('/Dashboard-admin',res.data)
+                            if(res.data.verify !== 0){
+                                // console.log('masuk')
+                                localStorage.setItem('token', token)
+                                localStorage.setItem('email', email)
+                                localStorage.setItem('saved', new Date().getTime())
+                                if(level === 'admin'){
+                                    history.push('/Dashboard-admin',res.data)
+                                }else{
+                                    history.push('/Dashboard',res.data)
+                                }
                             }else{
-                                history.push('/Dashboard',res.data)
+                                alert('Email has not been verified...!')
                             }
                         }else{
-                            alert('password wrong')
+                            alert('password wrong...!')
                         }
                     }else{
-                        alert('email wrong')
+                        alert('email wrong...!')
                     }
                 }
                 )
@@ -54,6 +71,43 @@ const Login =()=>{
         }else{
             alert('Kosong')
         }
+    }
+
+    const cekEmail =async()=>{
+        if(emailModal.length > 0){
+            var atps=emailModal.indexOf("@");
+            var dots=emailModal.lastIndexOf(".");
+            if (atps<1 || dots<atps+2 || dots+2>=emailModal.length) {
+                alert("Invalid email...!");
+                return false;
+            }else{
+                const data = {'email': emailModal,}
+                // console.log(data)
+                Axios.get(BASE_URL+'/users')
+                .then(res=>{
+                    const dataUser = res.data
+                    let status = false
+                    dataUser.forEach(e => {
+                        if(e.email === emailModal){
+                            status = true
+                        }
+                    });
+                    if(status === false){
+                        alert('Email belum terdaftar')
+                    }else{
+                        // alert('masuk')
+                        Axios.post(BASE_URL+'/forgote', data)
+                        .then(res=>{
+                            // console.log(res)
+                            alert('Check email for verification')
+                            handleClose()
+                            setEmailModal('')
+                        }).catch(err=>console.log(err))
+                    }
+                })
+            }
+        }
+        
     }
 
     useEffect(()=>{
@@ -77,14 +131,30 @@ const Login =()=>{
                         <input placeholder="Password" type="password" className="input-email" aria-describedby="emailHelp" value={password} onChange={(e)=> setPassword(e.target.value)} />
                     </div>
                     <button onClick={()=> handelInput()} type="button" className="btn btn-primary btn-lg btn-block btn-login">Login</button>
-                    {/* <Link className="Link" to="/Forgote">
-                        <span className="title-forgote">Forgote Password</span>
-                    </Link> */}
+                        <span onClick={handleShow} className="title-forgote">Forgote Password</span>
                     <Link className="Link" to="/Register">
                         <p className="title-new-regis">New Register</p>
                     </Link>
                 </div>
             </div>
+            {/* modal add item */}
+            <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>ENTER EMAIL</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control value={emailModal} onChange={(e)=>setEmailModal(e.target.value)} type="text" placeholder="Enter email" />
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cencel
+                    </Button>
+                    <Button variant="primary" onClick={()=>cekEmail()}>
+                        SUBMIT
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
         </div>
     )
 }

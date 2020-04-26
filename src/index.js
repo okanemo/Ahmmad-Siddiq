@@ -11,6 +11,7 @@ import Dashboard from '../src/components/screen/Dashboard';
 import DashboardAdmin from '../src/components/screen/DashboardAdmin';
 import Register from '../src/components/screen/Register';
 import Forgote from '../src/components/screen/Forgote';
+import Verify from '../src/components/screen/verify';
 const Data = () => {
   return(
     <Provider store={store}>
@@ -20,6 +21,7 @@ const Data = () => {
         <Route path='/Dashboard-admin' component={DashboardAdmin} />
         <Route path='/Register' component={Register} />
         <Route path='/Forgote' component={Forgote} />
+        <Route path='/Verify' component={Verify} />
       </Router>
     </Provider>
   )

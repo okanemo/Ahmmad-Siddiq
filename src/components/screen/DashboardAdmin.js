@@ -11,6 +11,7 @@ const DashboardAdmin =()=>{
 
     const [contentData, setContentData] = useState(true);
     const [dataUsers, setDataUsers] = useState([])
+    const [nameUser, setNameUser] = useState([])
     const [show, setShow] = useState(false);
     const [modalOk, setModalOk] = useState(false);
     const [ModaldeleteProduct, setDeleteProduct] = useState(false);
@@ -74,12 +75,15 @@ const DashboardAdmin =()=>{
 
     const cekUser=async()=>{
         const emailUser = localStorage.getItem('email')
-        // console.log(email)
-        if(emailUser !== 0){
-            // console.log(email)
+        if(emailUser){
             const email = {'email':emailUser}
-            await Axios.post(BASE_URL+`/users/detile`, email)
+            await Axios.post(BASE_URL+`/users/detile`, email,{
+                headers:{
+                    token: localStorage.getItem('token')
+                }
+            })
             .then(res=>{
+                setNameUser(res.data[0].username)
                 if(res.data[0].level !== 'admin'){
                     history.push('/Dashboard')
                 }
@@ -95,7 +99,11 @@ const DashboardAdmin =()=>{
             price: price
         }
         // console.log(data)
-        Axios.post(BASE_URL+'/insert', data)
+        Axios.post(BASE_URL+'/insert', data,{
+            headers:{
+                token: localStorage.getItem('token')
+            }
+        })
         .then(res=>{
             if(res.data){
                 alert('Add item Success')
@@ -114,12 +122,17 @@ const DashboardAdmin =()=>{
             level: inputStatus
         }
         // console.log(data)
-        Axios.patch(BASE_URL+'/update/users',data)
+        Axios.patch(BASE_URL+'/update/users',data,{
+            headers:{
+                token: localStorage.getItem('token')
+            }
+        })
         .then(res=>{
                 // console.log(res.data)
                 if(res.data.affectedRows){
                     alert('Success')
                     handleUpdateClose()
+                    history.push('/')
                 }
         }).catch(err=> console.log(err))
     }
@@ -133,7 +146,11 @@ const DashboardAdmin =()=>{
     const deleteUser = async ()=>{
         // console.log(id_user)
         handleClose()
-        Axios.delete(BASE_URL+`/delete/users/${id_user}`).then(res=>{
+        Axios.delete(BASE_URL+`/delete/users/${id_user}`,{
+            headers:{
+                token: localStorage.getItem('token')
+            }
+        }).then(res=>{
             // console.log(res.data.affectedRows)
             if(res.data.affectedRows){
                 handleOk();
@@ -157,17 +174,21 @@ const DashboardAdmin =()=>{
     }
 
     const timeClearLocalStorage=()=>{
-        let hours = 2
+        // let hours = 2
         let saved = localStorage.getItem('saved')
-        if (saved && (new Date().getTime() - saved > hours * 60 * 60 * 1000)) {
-        // if (saved && (new Date().getTime() - saved > 8000)) {
+        // if (saved && (new Date().getTime() - saved > hours * 60 * 60 * 1000)) {
+        if (saved && (new Date().getTime() - saved > 900000)) {
             logOut()
         }
     }
 
     const deleteContent = async ()=>{
         // console.log(idProduct)
-        Axios.delete(BASE_URL+`/delete/${idProduct}`)
+        Axios.delete(BASE_URL+`/delete/${idProduct}`,{
+            headers:{
+                token: localStorage.getItem('token')
+            }
+        })
         .then(res=>{
             // console.log(res)
             alert('Success')
@@ -185,8 +206,9 @@ const DashboardAdmin =()=>{
         getUsers()
         cekUser()
         timeClearLocalStorage()
+        setTimeout(logOut, 900000)
         return ()=>{
-            setTimeout(logOut, 7200000)
+            setTimeout(logOut, 900000)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [history])
@@ -196,6 +218,7 @@ const DashboardAdmin =()=>{
         <div className="containers-dashboard">
             <header className="header">
                 <h1 className="header-title">Dashboard Admin</h1>
+                <h3 className="nam-user">{nameUser}</h3>
                 <button onClick={()=>{logOut()}} type="button" className="btn btn-outline-warning logOut">Log Out</button>
             </header>
             <div className="sideBar">
@@ -307,7 +330,12 @@ const DashboardAdmin =()=>{
                         <Form.Label>Username</Form.Label>
                         <Form.Control value={inputUsername} onChange={(e)=>setUsername(e.target.value)} type="email" placeholder="Enter username" />
                         <Form.Label>Status</Form.Label>
-                        <Form.Control value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} type="email" placeholder="Enter status" />
+                        {/* <Form.Control value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} type="email" placeholder="Enter status" /> */}
+                        <Form.Control as="select" value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} custom>
+                            <option>Select</option>
+                            <option>user</option>
+                            <option>admin</option>
+                        </Form.Control>
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleUpdateClose}>

@@ -17,6 +17,14 @@
     background-color: rgb(68, 68, 165);
 }
 
+.nam-user{
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 13%;
+    color: white;
+}
+
 .header-title{
     color: rgb(255, 255, 255);
     line-height: 70px;
@@ -35,8 +43,7 @@
 
 .rightBar{
     text-align: center;
-    width: 20%;
-    background-color: white;
+    width: 30%;
     border-left: 1px solid rgb(190, 190, 190);
     position: fixed;
     top: 80px;
@@ -45,7 +52,7 @@
 }
 
 .contents{
-    width: 75%;
+    width: 65%;
     margin-top: 70px;
     text-align: center;
     /* border: 2px solid; */
@@ -67,7 +74,7 @@
 
 .listContent{
     float: left;
-    margin-left: 75px;
+    margin-left: 40px;
     margin-bottom: 20px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
