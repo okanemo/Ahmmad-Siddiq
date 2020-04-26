@@ -22,9 +22,9 @@ const DashboardAdmin =()=>{
     const [detileUser, setDetileUser] = useState([]);
     const [dataContent, setDataContent] = useState([]);
     const [reading, setReading] = useState([]);
-    const [productName, setNameProduct] = useState('');
+    const [product, setProduct] = useState('');
     const [desCription, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+    const [image, setImage] = useState('');
     const [inputUsername, setUsername] = useState('');
     const [inputStatus, SetSatus] = useState('');
 
@@ -85,12 +85,28 @@ const DashboardAdmin =()=>{
         }
     }
 
-    const addItem = async()=>{
-        const data = {
-            product_name: productName,
-            description: desCription,
-            price: price
+    const handleAdd = (e)=>{
+        // const data = {
+        //     product_name: productName,
+        //     description: desCription,
+        //     price: price
+        // }
+        let formProductNew={...product};
+        if(e.target.name==='image'){
+            formProductNew[e.target.name]=e.target.files[0];
+        }else{
+            formProductNew[e.target.name]=e.target.value;
         }
+        setProduct(formProductNew)
+    }
+
+    const addItem = async()=>{
+        // const dataProduct = product
+        const data = new FormData();
+        // console.log(data)
+        data.append('image', product.image);
+        data.set('product_name', product.product_name);
+        data.set('description', product.description);
         Axios.post(BASE_URL+'/insert', data,{
             headers:{
                 token: localStorage.getItem('token')
@@ -216,7 +232,7 @@ const DashboardAdmin =()=>{
                     {
                         reading.length !== 0 ? (
                             <>
-                            <img onClick={()=>console.log(reading)} className='img-reading' src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                            <img className='img-reading' src={reading.image} alt=""/>
                             <h5>{reading.product_name}</h5>
                             <p className="text-reading">{reading.description}</p>
                             </>
@@ -235,7 +251,7 @@ const DashboardAdmin =()=>{
                             dataContent.map(post=>{
                                 return(
                                     <div key={post.id_product} className="listContent">
-                                        <img onClick={()=>setToReading(post)} className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                        <img onClick={()=>setToReading(post)} className="imgContent" src={post.image} alt=""/>
                                         <p className="titleImg">{post.product_name}</p>
                                         <img onClick={()=>handleModalProduct(post)} className="imgDelet" src={require('../../asset/img/icons8-delete-bin-24.png')} alt=""/>
                                     </div> 
@@ -336,11 +352,11 @@ const DashboardAdmin =()=>{
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Label>Product Name</Form.Label>
-                        <Form.Control value={productName} onChange={(e)=>setNameProduct(e.target.value)} type="text" placeholder="Enter product name" />
+                        <Form.Control name="product_name" onChange={handleAdd} type="text" placeholder="Enter product name" />
                         <Form.Label>Description</Form.Label>
-                        <Form.Control value={desCription} onChange={(e)=>setDescription(e.target.value)} type="text" placeholder="Enter description" />
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control value={price} onChange={(e)=>setPrice(e.target.value)} type="number" placeholder="Enter price" />
+                        <Form.Control name="description" onChange={handleAdd} type="text" placeholder="Enter description" />
+                        <Form.Label>Image</Form.Label>
+                        <Form.Control name="image" onChange={handleAdd} type="file"/>
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleModaAddItemClose}>

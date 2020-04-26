@@ -65,7 +65,8 @@ const Register =()=>{
     })
     return(
         <div className="containers">
-            <img className="bg" src={require('./../../asset/img/Vector Abstract Blue Background.jpg')} alt=""/>
+            {/* <img className="bg" src={require('./../../asset/img/Vector Abstract Blue Background.jpg')} alt=""/> */}
+            <div className="background"></div>
             <div className="content">
                 <h1 className="title-login">REGISTER</h1>
                 <div className="formInput">

@@ -12,6 +12,16 @@
     align-items: center;
 }
 
+.background{
+    background-image: radial-gradient(circle, rgb(109, 187, 197), rgb(81, 148, 204), rgb(11, 102, 187));
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -999;
+}
+
 .bg{
     position: absolute;
     top: 0;
