@@ -23,8 +23,6 @@ const DashboardAdmin =()=>{
     const [dataContent, setDataContent] = useState([]);
     const [reading, setReading] = useState([]);
     const [product, setProduct] = useState('');
-    const [desCription, setDescription] = useState('');
-    const [image, setImage] = useState('');
     const [inputUsername, setUsername] = useState('');
     const [inputStatus, SetSatus] = useState('');
 
@@ -86,11 +84,6 @@ const DashboardAdmin =()=>{
     }
 
     const handleAdd = (e)=>{
-        // const data = {
-        //     product_name: productName,
-        //     description: desCription,
-        //     price: price
-        // }
         let formProductNew={...product};
         if(e.target.name==='image'){
             formProductNew[e.target.name]=e.target.files[0];
@@ -124,10 +117,10 @@ const DashboardAdmin =()=>{
 
     const handleUpdateUser= async()=>{
         const data = {
-            username: inputUsername,
+            username: inputUsername ? inputUsername : detileUser.username,
             email: detileUser.email,
             password: detileUser.password,
-            level: inputStatus
+            level: inputStatus ? inputStatus : detileUser.level
         }
         Axios.patch(BASE_URL+'/update/users',data,{
             headers:{
@@ -327,12 +320,12 @@ const DashboardAdmin =()=>{
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Label>Username</Form.Label>
-                        <Form.Control value={inputUsername} onChange={(e)=>setUsername(e.target.value)} type="email" placeholder="Enter username" />
+                        <Form.Control defaultValue={detileUser.username} onChange={(e)=>setUsername(e.target.value)} type="email" placeholder="Enter username" />
                         <Form.Label>Status</Form.Label>
-                        <Form.Control as="select" value={inputStatus} onChange={(e)=>SetSatus(e.target.value)} custom>
+                        <Form.Control as="select" defaultValue={detileUser.level} onChange={(e)=>SetSatus(e.target.value)} custom>
                             <option>Select</option>
-                            <option>user</option>
-                            <option>admin</option>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
                         </Form.Control>
                     </Modal.Body>
                     <Modal.Footer>

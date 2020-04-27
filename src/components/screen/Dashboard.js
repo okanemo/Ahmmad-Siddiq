@@ -82,7 +82,8 @@ const Dashboard =()=>{
         const dataInput = {
             product_name:dataFafovorite.product_name,
             description: dataFafovorite.description,
-            email: localStorage.getItem('email')
+            email: localStorage.getItem('email'),
+            image: dataFafovorite.image
         }
         Axios.post(BASE_URL+`/insert/favorite`,dataInput,{
             headers:{
@@ -159,7 +160,7 @@ const Dashboard =()=>{
                     {
                         reading.length !== 0 ? (
                             <>
-                            <img className='img-reading' src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                            <img className='img-reading' src={reading.image} alt=""/>
                             <h5>{reading.product_name}</h5>
                             <p className="text-reading">{reading.description}</p>
                             </>
@@ -177,7 +178,7 @@ const Dashboard =()=>{
                             dataContent.map(post=>{
                                 return(
                                     <div key={post.id_product} className="listContent">
-                                        <img onClick={()=>setToReading(post)} className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                        <img onClick={()=>setToReading(post)} className="imgContent" src={post.image} alt=""/>
                                         <p className="titleImg">{post.product_name}</p>
                                         <img onClick={()=>handleModalProduct(post)} className="imgHeart" src={require('../../asset/img/icons8-heart-50.png')} alt=""/>
                                     </div> 
@@ -193,7 +194,7 @@ const Dashboard =()=>{
                             dataFavorite.map(post=>{
                                 return(
                                     <div key={post.id_favorite} className="listContent">
-                                        <img onClick={()=>setToReading(post)} className="imgContent" src={require('../../asset/img/theshackbook2.jpg')} alt=""/>
+                                        <img onClick={()=>setToReading(post)} className="imgContent" src={post.image} alt=""/>
                                         <p className="titleImg">{post.product_name}</p>
                                         <img onClick={()=>handleShow(post)} className="imgDelet" src={require('../../asset/img/icons8-delete-bin-24.png')} alt=""/>
                                     </div> 
