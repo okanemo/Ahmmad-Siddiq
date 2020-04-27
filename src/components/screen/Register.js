@@ -3,10 +3,10 @@ import React, {useState, useEffect} from 'react';
 import '../style/Login.css';
 import Axios from 'axios';
 import {useHistory, Link} from 'react-router-dom';
-const Register =()=>{
-    const BASE_URL = 'http://192.168.1.12:4000';
-    let history = useHistory();
+import {BASE_URL} from '../../config';
 
+const Register =()=>{
+    let history = useHistory();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

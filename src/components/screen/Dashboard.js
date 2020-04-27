@@ -3,11 +3,11 @@ import '../style/Dashboard.css';
 import {useHistory} from 'react-router-dom';
 import Axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
+import {BASE_URL} from '../../config';
 require('dotenv').config();
 
 const Dashboard =()=>{
     let history = useHistory();
-    const BASE_URL = 'http://192.168.1.12:4000';
     const [contentData, setContentData] = useState(true);
     const [nameUser, setNameUser] = useState([])
     const [show, setShow] = useState(false);

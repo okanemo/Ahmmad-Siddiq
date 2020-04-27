@@ -1,0 +1,1 @@
+export let BASE_URL = 'http://54.204.68.167:4000';
